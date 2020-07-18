@@ -5,18 +5,18 @@ const {User} = require("../database/models/Schema");
 const { Types } = require("mongoose");
 
 
-router.get("/",(req,res)=>{
+router.get("/api/",(req,res)=>{
     home(req,res); 
 });
 
-router.get("/user",(req,res)=>{
+router.get("/api/user",(req,res)=>{
    const Data = User.find({},(err,data)=>{
        res.send(data);
    });
 });
 
 
-router.post("/getUpdateUser",(req,res)=>{
+router.post("/api/getUpdateUser",(req,res)=>{
    const user  = User.updateOne({_id:req.body._id},
     {$set:
         {
@@ -36,12 +36,12 @@ router.post("/getUpdateUser",(req,res)=>{
  });
 
 
-router.get("/edit/:id", (req, res, next) => {
+router.get("/api/edit/:id", (req, res, next) => {
     res.status(204).send();
 });
 
 
-router.post("/newUser",(req,res)=>{
+router.post("/api/newUser",(req,res)=>{
     const dataPost = new User({
         Nombre: req.body.Nombre,
         Telefono:req.body.Telefono,
@@ -56,7 +56,7 @@ router.post("/newUser",(req,res)=>{
     });
   });
 
-router.post("/getDelete", (req, res) => {
+router.post("/api/getDelete", (req, res) => {
     deleteRegistro(req,res);
     deleteRegistroUsuario(req,res);
 });
@@ -87,7 +87,7 @@ deleteRegistroUsuario=(req,res)=>{
 
 
 
-router.post("/getUpdate",async (req,res)=>{
+router.post("/api/getUpdate",async (req,res)=>{
 
     updateRegistro(req,res);
     updateRegistroUsuarios(req,res);
@@ -145,7 +145,7 @@ updateRegistroUsuarios=(req,res)=>{
 
 
 
-router.post("/getDate",(req,res)=>{
+router.post("/api/getDate",(req,res)=>{
     var data = req.body.data;
     var querry = JSON.parse(data); 
     const dataPost = Person.find(
@@ -161,7 +161,7 @@ router.post("/getDate",(req,res)=>{
     console.log(querry);  
 });
 
-router.post("/getQuerry", (req, res) => {
+router.post("/api/getQuerry", (req, res) => {
 
     var Productos = req.body.querryProductos;
     var Nombre = req.body.querry;
@@ -175,7 +175,7 @@ router.post("/getQuerry", (req, res) => {
 
 });
 
-router.post("/getData",async(req,res)=>{
+router.post("/api/getData",async(req,res)=>{
     const dataPost = new Person({
         Nombre: req.body.Nombre,
         Productos: req.body.Productos,
