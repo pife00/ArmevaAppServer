@@ -5,7 +5,7 @@ const {User} = require("../database/models/Schema");
 const { Types } = require("mongoose");
 
 
-router.get("/",(req,res)=>{
+router.get("/api",(req,res)=>{
     home(req,res); 
 });
 
