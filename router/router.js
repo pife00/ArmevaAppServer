@@ -176,6 +176,7 @@ router.post("/api/getQuerry", (req, res) => {
 });
 
 router.post("/api/getData",async(req,res)=>{
+    
     const dataPost = new Person({
         Nombre: req.body.Nombre,
         Productos: req.body.Productos,
@@ -201,7 +202,6 @@ router.post("/api/getData",async(req,res)=>{
                 const userPost = new User({
                     Nombre: req.body.Nombre,
                     Telefono:req.body.Telefono,
-                    Direccion:req.body.Direccion,
                     Actividad: dataPost
                 });
                 userPost.save((err,data)=>{
@@ -224,6 +224,7 @@ router.post("/api/getData",async(req,res)=>{
 
 getUserData=(req,res,data)=>{
     const user = User.updateOne({Nombre:data.Nombre},
+        {$set:{Telefono:"0"}},
         {$push:{Actividad:data}},
         (err,data)=>{
             if(err){
