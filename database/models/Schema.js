@@ -20,7 +20,7 @@ var Person = mongoose.model("Person",PersonSchema);
 
 const UserSchema = new mongoose.Schema({
     Nombre: String,
-    Telefono: Number,
+    Telefono: String,
     Direccion: String,
     Actividad: [PersonSchema],
     Oficio:String,
