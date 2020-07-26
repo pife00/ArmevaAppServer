@@ -15,6 +15,18 @@ router.get("/api/user",(req,res)=>{
    });
 });
 
+router.post("/api/userPartial",(req,res)=>{
+    const user = User.find({$text:{$search:req.body.Nombre}},(err,data)=>{
+        res.send(data);
+    });
+});
+
+router.post("/api/userExist",(req,res)=>{
+    const exist = User.exists({Nombre:req.body.Nombre},(err,data)=>{
+        res.send(data);
+    });
+});
+
 
 router.post("/api/getUpdateUser",(req,res)=>{
    const user  = User.updateOne({_id:req.body._id},
@@ -198,20 +210,6 @@ router.post("/api/getData",async(req,res)=>{
         if(err){
 
         }else{
-            if(data == false){
-                const userPost = new User({
-                    Nombre: req.body.Nombre,
-                    Telefono:req.body.Telefono,
-                    Actividad: dataPost
-                });
-                userPost.save((err,data)=>{
-                    if(err){
-                        return console.log(err);
-                    }else{
-                        res.status(200);
-                    }
-                });     
-            }
             if(data == true){
                 getUserData(req,res,dataPost);
             }
@@ -224,7 +222,6 @@ router.post("/api/getData",async(req,res)=>{
 
 getUserData=(req,res,data)=>{
     const user = User.updateOne({Nombre:data.Nombre},
-        {$set:{Telefono:"0"}},
         {$push:{Actividad:data}},
         (err,data)=>{
             if(err){

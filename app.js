@@ -35,6 +35,8 @@ app.post("/api/getUpdateUser",router);
 app.post("/api/getData",router);
 app.post("/api/getQuerry",router);
 app.post("/api/getDate",router);
+app.post("/api/userExist",router);
+app.post("/api/userPartial",router);
 
 app.listen(process.env.PORT || 3000);
 console.log("Servidor corriendo en el puerto 3000");

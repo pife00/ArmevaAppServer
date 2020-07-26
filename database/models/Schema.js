@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 const date= new Date();
 
 const PersonSchema = new mongoose.Schema({
-    Nombre:String,
+    Nombre:{
+        type:String,
+        required:[true,'El nombre es necesario']
+    },
     Productos:String,
     Precio:{
         type:Number,
@@ -19,7 +22,10 @@ const PersonSchema = new mongoose.Schema({
 var Person = mongoose.model("Person",PersonSchema);
 
 const UserSchema = new mongoose.Schema({
-    Nombre: String,
+    Nombre: {
+        type:String,
+        required:[true,'El nombre es necsario']
+    },
     Telefono: String,
     Direccion: String,
     Actividad: [PersonSchema],
