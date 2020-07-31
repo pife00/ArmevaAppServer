@@ -27,11 +27,14 @@ app.get("/api",router);
 app.get("/api/delete/:id",router);
 app.get("/api/edit/:id",router);
 app.get("/api/user",router);
+app.post("/api/userDeuda",router);
 
 app.post("/api/newUser",router);
 app.post("/api/getDelete",router);
 app.post("/api/getUpdate",router);
 app.post("/api/getUpdateUser",router);
+app.post("/api/abono",router);
+app.post("/api/userDeudaPagada",router);
 app.post("/api/getData",router);
 app.post("/api/getQuerry",router);
 app.post("/api/getDate",router);

@@ -16,6 +16,10 @@ const PersonSchema = new mongoose.Schema({
         minlength:1
     },
     Categoria:String,
+    Deuda:String,
+    Abono:{
+       type: Array,
+    },
     Fecha: Date
 });
 
