@@ -37,6 +37,12 @@ router.post("/api/userPartial",(req,res)=>{
     });
 });
 
+router.post("/api/registroPartial",(req,res)=>{
+    const user = Person.find({$text:{$search:req.body.Nombre}},(err,data)=>{
+        res.send(data);
+    });
+});
+
 router.post("/api/userExist",(req,res)=>{
     const exist = User.exists({Nombre:req.body.Nombre},(err,data)=>{
         res.send(data);
@@ -87,7 +93,8 @@ router.post("/api/newUser",(req,res)=>{
     const dataPost = new User({
         Nombre: req.body.Nombre,
         Telefono:req.body.Telefono,
-        Direccion:req.body.Direccion
+        Direccion:req.body.Direccion,
+        Oficio:req.body.Oficio,
     });
     dataPost.save((err,data)=>{
         if(err){
@@ -101,6 +108,18 @@ router.post("/api/newUser",(req,res)=>{
 router.post("/api/getDelete", (req, res) => {
     deleteRegistro(req,res);
     deleteRegistroUsuario(req,res);
+    
+});
+
+router.post("/api/getDeleteUser", (req, res) => {
+    const user = User.deleteOne({_id: req.body.id}, (err, data) => {
+        if (err) {
+         
+        } else {
+            res.send(data);
+        }
+    });
+    
 });
 
 deleteRegistro=(req,res)=>{
@@ -133,6 +152,8 @@ router.post("/api/getUpdate",async (req,res)=>{
 
     updateRegistro(req,res);
     updateRegistroUsuarios(req,res);
+  // res.send(req.body);
+   // console.log(req.body);
 
 
 });
@@ -159,7 +180,7 @@ updateRegistroUsuarios=(req,res)=>{
             "Actividad.$.Precio":req.body.Precio,
             "Actividad.$.Cantidad":req.body.Cantidad,
             "Actividad.$.Categoria":req.body.Categoria,
-            "Actividad.$.Fecha":req.body.Fecha,
+            
         }},
         (err,data)=>{
         if(err){
@@ -282,6 +303,7 @@ router.post("/api/getData",async(req,res)=>{
             }
         }
     });
+   
 
 });
 

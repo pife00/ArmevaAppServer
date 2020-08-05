@@ -31,6 +31,7 @@ app.post("/api/userDeuda",router);
 
 app.post("/api/newUser",router);
 app.post("/api/getDelete",router);
+app.post("/api/getDeleteUser",router);
 app.post("/api/getUpdate",router);
 app.post("/api/getUpdateUser",router);
 app.post("/api/abono",router);
@@ -40,6 +41,7 @@ app.post("/api/getQuerry",router);
 app.post("/api/getDate",router);
 app.post("/api/userExist",router);
 app.post("/api/userPartial",router);
+app.post("/api/registroPartial",router);
 
 app.listen(process.env.PORT || 3000);
 console.log("Servidor corriendo en el puerto 3000");
