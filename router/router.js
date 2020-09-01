@@ -4,19 +4,21 @@ const {Person} = require("../database/models/Schema");
 const {User} = require("../database/models/Schema");
 const { Types } = require("mongoose");
 
-
+//Pide los datos De registro
 router.get("/api", async(req,res)=>{
     const Data = await Person.find({},(err,data)=>{
         res.send(data);
     });
 });
 
+//Pide los datos de los usuarios
 router.get("/api/user",(req,res)=>{
    const Data = User.find({},(err,data)=>{
        res.send(data);
    });
 });
 
+//Pide los datos de los usuarios de la Deuda
 router.post("/api/userDeuda",(req,res)=>{
     const user = User.find({Nombre:req.body.Nombre},(err,data)=>{
         res.send(data);
@@ -26,29 +28,31 @@ router.post("/api/userDeuda",(req,res)=>{
 
 router.post("/api/userDeudaPagada",(req,res)=>{
     PagoDeudaRegistro(req,res);
-    PagoDeudaUsuario(req,res);
-
-       
+    PagoDeudaUsuario(req,res); 
 });
 
+//Busca a los usuarios para su posterior comprobacion
 router.post("/api/userPartial",(req,res)=>{
     const user = User.find({$text:{$search:req.body.Nombre}},(err,data)=>{
         res.send(data);
     });
 });
 
+//Busca a los registros para su posterior comprobacion
 router.post("/api/registroPartial",(req,res)=>{
     const user = Person.find({$text:{$search:req.body.Nombre}},(err,data)=>{
         res.send(data);
     });
 });
 
+//Comprueba que el usuario existe
 router.post("/api/userExist",(req,res)=>{
     const exist = User.exists({Nombre:req.body.Nombre},(err,data)=>{
         res.send(data);
     });
 });
 
+//Abono del usuario
 router.post("/api/abono",(req,res)=>{
     const abono = parseInt(req.body.Abono);
     const user = User.updateOne(
@@ -67,7 +71,7 @@ router.post("/api/abono",(req,res)=>{
     )
 });
 
-
+//Actualizacion de los registro del usuario
 router.post("/api/getUpdateUser",(req,res)=>{
    const user  = User.updateOne({_id:req.body._id},
     {$set:
@@ -88,7 +92,7 @@ router.post("/api/getUpdateUser",(req,res)=>{
  });
 
 
-
+//Añade a un nuevo usuario
 router.post("/api/newUser",(req,res)=>{
     const dataPost = new User({
         Nombre: req.body.Nombre,
@@ -105,12 +109,14 @@ router.post("/api/newUser",(req,res)=>{
     });
   });
 
+  //Elimina a registro tanto de usuairo como de registro
 router.post("/api/getDelete", (req, res) => {
     deleteRegistro(req,res);
     deleteRegistroUsuario(req,res);
     
 });
 
+//Elimina a usuario
 router.post("/api/getDeleteUser", (req, res) => {
     const user = User.deleteOne({_id: req.body.id}, (err, data) => {
         if (err) {
@@ -122,6 +128,7 @@ router.post("/api/getDeleteUser", (req, res) => {
     
 });
 
+//elimina registro
 deleteRegistro=(req,res)=>{
     const deletePost = Person.deleteOne({_id: req.body.id}, (err, data) => {
         if (err) {
@@ -131,7 +138,7 @@ deleteRegistro=(req,res)=>{
         }
     });
 },
-
+//elimina registro de usuario
 deleteRegistroUsuario=(req,res)=>{
     const user = User.updateOne(
         {"Nombre":req.body.Nombre},
@@ -147,7 +154,7 @@ deleteRegistroUsuario=(req,res)=>{
 },
 
 
-
+//Actualiza registro y a usuario
 router.post("/api/getUpdate",async (req,res)=>{
 
     updateRegistro(req,res);
@@ -157,7 +164,7 @@ router.post("/api/getUpdate",async (req,res)=>{
 
 
 });
-
+//acualiza registro 
 updateRegistro=(req,res,callback)=>{
     const dataPost = Person.updateOne({_id:req.body._id},req.body,(err,data)=>{
         if(err){
@@ -169,7 +176,7 @@ updateRegistro=(req,res,callback)=>{
     callback = dataPost;
     return callback;
 },
-
+//acualiza registro  de usuario
 updateRegistroUsuarios=(req,res)=>{
     
    const datapost = User.updateOne(
@@ -205,7 +212,7 @@ updateRegistroUsuarios=(req,res)=>{
         }
     }); 
 },
-
+//Metodo para pagar deuda de registro 
 PagoDeudaRegistro=(req,res,callback)=>{
     const dataPost = Person.updateOne(
         {_id:req.body._id},
@@ -224,7 +231,7 @@ PagoDeudaRegistro=(req,res,callback)=>{
     });
     
 },
-
+//Metodo para pagar deuda de usuario
 PagoDeudaUsuario=(req,res)=>{
     
     const datapost = User.updateOne(
@@ -242,7 +249,7 @@ PagoDeudaUsuario=(req,res)=>{
      }); 
  },
 
-
+//Pide los datps segun la Fecha mes y año
 router.post("/api/getDate",(req,res)=>{
     var data = req.body.data;
     var querry = JSON.parse(data); 
@@ -260,7 +267,7 @@ router.post("/api/getDate",(req,res)=>{
 });
 
 
-
+//Toma registro de usuario y registro
 router.post("/api/getData",async(req,res)=>{
     var dataPost = new Person();
     if(req.body.Categoria == "Deuda"){

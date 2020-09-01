@@ -20,15 +20,11 @@ app.use(bodyParser.text({defaultCharset: 'utf-8'}));
 app.use(express.json());
 app.use(morgan("tiny"));
 
-
-
-
 app.get("/api",router);
 app.get("/api/delete/:id",router);
 app.get("/api/edit/:id",router);
 app.get("/api/user",router);
 app.post("/api/userDeuda",router);
-
 app.post("/api/newUser",router);
 app.post("/api/getDelete",router);
 app.post("/api/getDeleteUser",router);
